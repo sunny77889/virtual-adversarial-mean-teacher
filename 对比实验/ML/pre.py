@@ -29,7 +29,7 @@ class features(object):
         self.dport = 0  # 源端口号
         self.sport = 0  # 目的端口号
         self.pack_num = 0  # 包数量
-        self.flow_num = 0  # 流数目
+        self.connection_num = 0  # 流数目
         self.num_src = 0  # 源包数目
         self.num_dst = 0    # 目的包数目
         self.num_ratio = 0  # 上下行流量比
@@ -88,7 +88,7 @@ class features(object):
         self.cipher = 0  # 加密组件
         self.name = ''  # pacp包名称
         self.cipher_content = [0 for i in range(256)]  # 加密内容里各字节出现次数
-        self.cipher_content_ratio = 0  # 加密内容位中0出现次数
+        self.bit_fre_ratio = 0  # 加密内容位中0出现次数
         self.flag = False
         self.fin = 0  # 标志位Fin的数量
         self.syn = 0  # 标志位Syn的数量
@@ -121,32 +121,29 @@ class features(object):
         self.max_packetsize_packet, self.min_packetsize_packet, self.mean_packetsize_packet, self.std_packetsize_packet = cal(
             self.packetsize_packet_sequence)
         self.cipher_support_num = cal_hex(self.cipher_support)
-        self.cipher_content_ratio = round(cal_ratio(self.cipher_content), 4)
+        self.bit_fre_ratio = round(cal_ratio(self.cipher_content), 4)
         if need_matrix:
             self.transition_matrix = cal_matrix(feature.packetsize_packet_sequence)
         self.num_ratio = cal_div(self.num_src, self.num_dst)
         self.size_ratio = cal_div(self.size_src, self.num_dst)
         self.by_s = cal_div(self.packetsize_size,self.time)
         self.pk_s = cal_div(self.pack_num, self.time)
-        return [self.pack_num, time, self.flow_num,   self.packetsize_size, self.dport,
-                self.max_time, self.min_time, self.mean_time, self.std_time, self.max_time_src, self.min_time_src,
-                self.mean_time_src, self.std_time_src,
-                self.max_time_dst, self.min_time_dst, self.mean_time_dst, self.std_time_dst, self.max_time_flow,
-                self.min_time_flow, self.mean_time_flow, self.std_time_flow,
-                self.max_packetsize_packet, self.mean_packetsize_packet, self.std_packetsize_packet, #22 24 
+        return [self.pack_num, time, self.connection_num, self.cipher_num, self.packetsize_size,
+                self.max_time, self.min_time, self.mean_time, self.std_time, 
+                self.max_time_src, self.min_time_src, self.mean_time_src, self.std_time_src,
+                self.max_time_dst, self.min_time_dst, self.mean_time_dst, self.std_time_dst, 
+                self.max_time_flow, self.min_time_flow, self.mean_time_flow, self.std_time_flow,
+                self.max_packetsize_packet, self.mean_packetsize_packet, self.std_packetsize_packet, 
                 self.max_packetsize_src, self.mean_packetsize_src, self.std_packetsize_src,
                 self.max_packetsize_dst, self.mean_packetsize_dst, self.std_packetsize_dst,
-                self.max_packetsize_flow, self.min_packetsize_flow, self.mean_packetsize_flow, self.std_packetsize_flow, #31 
-                self.fin, self.syn, self.rst, self.ack, self.urg, self.psh, self.ece, self.cwe,
-                self.num_src, self.num_dst, self.num_ratio,
-                self.size_src, self.size_dst, self.size_ratio,
-                self.by_s, self.pk_s,
+                self.max_packetsize_flow, self.min_packetsize_flow, self.mean_packetsize_flow, self.std_packetsize_flow,
+                self.bit_fre_ratio,
                 self.lable
                 ]
         """
         self.pack_num = 0  # 包数量
         time # 整体持续时间
-        self.flow_num = 0  # 流数目（加密链接次数）
+        self.connection_num = 0  # 流数目（加密链接次数）
        
      
         self.max_time = 0  # 最大间隔时间
@@ -212,14 +209,14 @@ class features(object):
         """
         
         #  dport
-        # return [self.pack_num, time, self.dport, self.flow_num, ip_src, self.cipher_num, self.packetsize_size,
+        # return [self.pack_num, time, self.dport, self.connection_num, ip_src, self.cipher_num, self.packetsize_size,
         #         self.max_time, self.min_time, self.mean_time, self.std_time, self.max_time_src, self.min_time_src, self.mean_time_src, self.std_time_src,
         #         self.max_time_dst, self.min_time_dst, self.mean_time_dst, self.std_time_dst, self.max_time_flow, self.min_time_flow, self.mean_time_flow, self.std_time_flow,
         #         self.max_packetsize_packet,  self.mean_packetsize_packet, self.std_packetsize_packet,
         #         self.max_packetsize_src,  self.mean_packetsize_src, self.std_packetsize_src,
         #         self.max_packetsize_dst, self.mean_packetsize_dst, self.std_packetsize_dst,
         #         self.max_packetsize_flow, self.min_packetsize_flow, self.mean_packetsize_flow, self.std_packetsize_flow,
-        #         self.cipher_content_ratio
+        #         self.bit_fre_ratio
         #         ]
 
 
@@ -474,7 +471,7 @@ def parse_tls_records(ip, stream, nth):
             handshake_type = ord(record.data[:1])
             packetsize = record.data
             if handshake_type == 2:  # server hello
-                feature.flow_num += 1
+                feature.connection_num += 1
                 feature.cipher = (record.data[-2] + record.data[-3] * 256)
             if handshake_type == 11:  # certificate
                 len_cer = int.from_bytes(record.data[4:7], byteorder='big')  # 转换字节流为十进制
