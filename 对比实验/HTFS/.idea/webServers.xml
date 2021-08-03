@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="835fff9b-f592-4b8d-bf47-cef6ba97d133" name="xiaoqing">
+        <fileTransfer rootFolder="/mnt/datasets/xiaoqingdata/Projects" accessType="SFTP" host="180.76.69.162" port="22" sshConfigId="8cb02ffa-a52b-4070-bbc7-1afff0cde96b" sshConfig="xiaoqing@180.76.69.162:22 key" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

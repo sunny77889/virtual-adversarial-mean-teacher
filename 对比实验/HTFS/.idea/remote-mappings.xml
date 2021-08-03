@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="RemoteMappingsManager">
+    <list>
+      <list>
+        <remote-mappings server-id="python@9576fe33-a986-4ed6-a44e-3c5787f8d08f" />
+        <remote-mappings server-id="python@sftp://xiaoqing@180.76.69.162:22/mnt/datasets/xiaoqingdata/anaconda3/envs/tensorflow/bin/python3.7">
+          <settings>
+            <list>
+              <mapping local-root="$PROJECT_DIR$" remote-root="/mnt/datasets/xiaoqingdata/Projects/HTFS" />
+            </list>
+          </settings>
+        </remote-mappings>
+      </list>
+    </list>
+  </component>
+</project>

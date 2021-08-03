@@ -1,0 +1,12 @@
+,malware_name,malware_num,benign_name,benign_num
+0,Nsis,6069,SMB,6276
+1,Virut,33103,Facetime,6000
+2,Neris,33791,MySQL,86089
+3,Tinba,8504,WorldOfWarcraft,7883
+4,Htbot,6367,Gmail,8629
+5,Cridex,16386,BitTorrent,7517
+6,Geodo,40947,FTP,96858
+7,Zeus,10970,Weibo,5034
+8,Miuref,13481,Outlook,7524
+9,Shifu,9634,Skype,6321
+,,179252,,238131
