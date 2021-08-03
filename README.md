@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # virtual adversarial mean teacher
 
 #### 介绍
@@ -76,4 +75,3 @@ experiment3：前述模型在少标记样本下的多分类效果对比。分别
 =======
 # virtual-adversarial-mean-teacher
 基于半监督深度学习的木马流量检测方法
->>>>>>> 2ec3e52466a160d722919c157cf7e138767ff01a
