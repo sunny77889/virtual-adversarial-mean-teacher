@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # virtual adversarial mean teacher
 
 #### 介绍
@@ -73,7 +72,4 @@ experiment2：检测未知样本的分类效果对比，即从十类样本中选
 experiment3：前述模型在少标记样本下的多分类效果对比。分别设置10类木马流量以及包含所有类的全集木马流量，标记样本占比为10%。
 #### 实验结果
 实验结果见文件夹 “图片”
-=======
-# virtual-adversarial-mean-teacher
-基于半监督深度学习的木马流量检测方法
->>>>>>> 2ec3e52466a160d722919c157cf7e138767ff01a
+
