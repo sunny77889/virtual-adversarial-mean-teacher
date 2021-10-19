@@ -30,8 +30,11 @@
 1.将需要处理的pcap文件放入1_Pcap
 
 2.依次执行2_PcapToSession，3_ProcessSession，4_Session2png，5_Png2Mnist
-
-3.得到mnist文件
+  1. windows运行2_PcapToSession.ps1(powershell脚本)(pcap所在路径不要有空格等特殊字符)
+  2. python 3_ProcessSession.py D:\PcapToMnist\PcapToMnist\2_Session\AllLayers
+  3. python 4_Session2png.py
+  4. python 5_Png2Mnist.py
+5.得到mnist文件
 
 4.将mnist文件解压后的文件与converter.m文件放在同一目录
 
