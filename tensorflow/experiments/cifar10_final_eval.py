@@ -6,16 +6,17 @@
 # Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 
 """CIFAR-10 final evaluation"""
-
+import os
+print(os.getcwd())
 import logging
 import sys
 
-from experiments.run_context import RunContext
+from ..experiments.run_context import RunContext
 import tensorflow as tf
 
-from datasets import Cifar10ZCA
-from mean_teacher.model import Model
-from mean_teacher import minibatching
+from ..datasets import Cifar10ZCA
+from ..mean_teacher.model import Model
+from ..mean_teacher import minibatching
 
 
 LOG = logging.getLogger('main')

@@ -12,9 +12,9 @@ import time
 import logging
 import os
 
+
 from pandas import DataFrame
 from collections import defaultdict
-
 
 class TrainLog:
     """Saves training logs in Pandas msgpacks"""
@@ -35,7 +35,8 @@ class TrainLog:
 
     def save(self):
         df = self._as_dataframe()
-        df.to_msgpack(self.log_file_path, compress='zlib')
+        print(self.log_file_path)
+        df.to_pickle(self.log_file_path)
 
     def _record(self, step, col_val_dict):
         with self._log_lock:

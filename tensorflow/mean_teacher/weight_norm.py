@@ -13,8 +13,11 @@ The code is adapted from
 https://github.com/openai/pixel-cnn/blob/fc86dbce1d508fa79f8e9a7d1942d229249a5366/pixel_cnn_pp/nn.py
 """
 
-import tensorflow as tf
-from tensorflow.contrib.framework.python.ops import add_arg_scope
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
+
+# from tensorflow.contrib.framework.python.ops import add_arg_scope
+from tf_slim.ops.arg_scope_test import add_arg_scope
 
 
 @add_arg_scope
