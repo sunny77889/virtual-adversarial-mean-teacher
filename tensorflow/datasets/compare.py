@@ -40,7 +40,7 @@ class Datafile:
 
 
 class COMPARE:
-    DIR = os.path.join('data', 'images', 'compare')
+    DIR = os.path.join('tensorflow','data', 'images', 'compare')
     FILES = {
         'train': Datafile(os.path.join(DIR, 'compare_train.mat'), 319000),
         'test': Datafile(os.path.join(DIR, 'compare_test.mat'),35436)

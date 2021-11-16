@@ -1,0 +1,4 @@
+model_checkpoint_path: "checkpoint-800"
+all_model_checkpoint_paths: "checkpoint-0"
+all_model_checkpoint_paths: "checkpoint-400"
+all_model_checkpoint_paths: "checkpoint-800"
