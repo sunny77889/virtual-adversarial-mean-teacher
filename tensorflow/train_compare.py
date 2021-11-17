@@ -18,7 +18,7 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 import logging
 from datetime import datetime
 
-from datasets import COMPARE
+from datasets.compare1 import COMPARE
 from experiments.run_context import RunContext
 from mean_teacher import minibatching
 from mean_teacher.model import Model
@@ -46,7 +46,7 @@ def MT_train(data_seed=0):
     model.train(training_batches, evaluation_batches_fn)
 
 def MT_test(data_seed=0):
-    n_labeled = 320
+    n_labeled = "all"
     n_extra_unlabeled = 0
 
     model = Model(RunContext(__file__, 0))
@@ -65,6 +65,10 @@ def MT_test(data_seed=0):
     model.load("tensorflow/results/train_compare/savedModel/0/transient/")
     model.evaluate(evaluation_batches_fn)
 
+import os
+import struct
+
+import numpy as np
 
 if __name__ == "__main__":
     # MT_train()

@@ -31,6 +31,7 @@ class Datafile:
             ('y', np.int32, ())  # We will be using -1 for unlabeled
         ])
         dictionary = scipy.io.loadmat(self.path)
+        
         temp = np.transpose(dictionary['x'], [2, 0, 1])
         temp = temp[:,:,:,np.newaxis]
         data['x'] = temp
