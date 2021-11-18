@@ -15,10 +15,9 @@ from .utils import random_balanced_partitions, random_partitions
 
 
 class Datafile:
-    def __init__(self, data_path,label_path, n_examples):
+    def __init__(self, data_path,label_path):
         self.images_path = data_path
         self.labels_path = label_path
-        self.n_examples = n_examples
         self._data = None
 
     @property
@@ -29,10 +28,7 @@ class Datafile:
     
     def _load(self):
         
-        data = np.zeros(self.n_examples, dtype=[
-            ('x', np.uint8, (28, 28, 1)),
-            ('y', np.int32, ())  # We will be using -1 for unlabeled
-        ])
+        
         #加载‘idx1_ubyte'文件
         with open(self.labels_path, 'rb') as lbpath:
             magic, n = struct.unpack('>II',
@@ -48,7 +44,11 @@ class Datafile:
         #根据实际数据，将类别转换为二类：0（正常）和 1（异常）
         labels[labels<10]=0
         labels[labels>=10]=1
-        
+        n_examples = len(images)
+        data = np.zeros(n_examples, dtype=[
+            ('x', np.uint8, (28, 28, 1)),
+            ('y', np.int32, ())  # We will be using -1 for unlabeled
+        ])
         data['x']=images.reshape((len(images), 28,28,1))
         data['y']=labels
         self._data = data
@@ -58,8 +58,8 @@ class COMPARE:
     DIR = os.path.join('tensorflow','data', 'images', '5_Mnist')
     # 5897是训练集中样本的数量， 64355是测试集样本数量
     FILES = {
-        'train': Datafile(os.path.join(DIR, 'train-images-idx3-ubyte'),os.path.join(DIR, 'train-labels-idx1-ubyte'), 5897),
-        'test': Datafile(os.path.join(DIR, 't10k-images-idx3-ubyte'),os.path.join(DIR, 't10k-labels-idx1-ubyte'),64355)
+        'train': Datafile(os.path.join(DIR, 'train-images-idx3-ubyte'),os.path.join(DIR, 'train-labels-idx1-ubyte')),
+        'test': Datafile(os.path.join(DIR, 't10k-images-idx3-ubyte'),os.path.join(DIR, 't10k-labels-idx1-ubyte'))
     }
     VALIDATION_SET_SIZE = 589  # 10% of the training set
     UNLABELED = -1
