@@ -8,23 +8,23 @@
 "Mean teacher model"
 import tensorflow.compat.v1 as tf
 
-
 tf.disable_v2_behavior()
 
 import logging
 import os
 from collections import namedtuple
 
+import numpy as np
 import tf_slim as slim
-from tf_slim.metrics import streaming_mean, streaming_accuracy, streaming_precision, streaming_recall, \
-    aggregate_metric_map
 from tensorflow import metrics
+from tf_slim.metrics import (aggregate_metric_map, streaming_accuracy,
+                             streaming_mean, streaming_precision,
+                             streaming_recall)
 
-
-from . import nn
+from . import nn, string_utils
 from . import weight_norm as wn
-from .framework import ema_variable_scope, name_variable_scope, assert_shape, HyperparamVariables
-from . import string_utils
+from .framework import (HyperparamVariables, assert_shape, ema_variable_scope,
+                        name_variable_scope)
 
 LOG = logging.getLogger('main')
 
@@ -261,7 +261,22 @@ class Model:
                 self.save_checkpoint()
         self.evaluate(evaluation_batches_fn)
         self.save_checkpoint()
-
+    def pred(self, evaluation_batches_fn):
+        self.run(self.metric_init_op)
+        preds=np.array([])
+        labels=np.array([])
+        for batch in evaluation_batches_fn():
+            self.run(self.metric_update_ops,
+                     feed_dict=self.feed_dict(batch, is_training=False))
+            pre_bat=self.run(self.out_prediction,feed_dict=self.feed_dict(batch, is_training=False))
+            labels=np.hstack((labels,batch['y']))
+            preds=np.hstack((preds, pre_bat))
+        step = self.run(self.global_step)
+        results = self.run(self.metric_values)
+        self.validation_log.record(step, results)
+        LOG.info("step %5d:   %s", step, self.result_formatter.format_dict(results))
+        return preds
+    
     def evaluate(self, evaluation_batches_fn):
         self.run(self.metric_init_op)
         for batch in evaluation_batches_fn():

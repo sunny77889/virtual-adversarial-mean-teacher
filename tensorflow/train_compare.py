@@ -63,7 +63,8 @@ def MT_test(data_seed=0):
     trojan = COMPARE(data_seed, n_labeled, n_extra_unlabeled, True)
     evaluation_batches_fn = minibatching.evaluation_epoch_generator(trojan.evaluation)
     model.load("tensorflow/results/train_compare/savedModel/0/transient/")
-    model.evaluate(evaluation_batches_fn)
+    preds = model.pred(evaluation_batches_fn)  # 预测的输出：0，1序列， 0：正常  1:异常
+    
 
 import os
 import struct
