@@ -37,7 +37,7 @@ def readdata():
     Returns:图片特征、包级特征、流级特征、标签
 
     '''
-    datadir = "./feature_USTC-TFC2016/feature_27"
+    datadir = "./features"
     flow_features = pd.DataFrame()
     img_features = []
     packet_features = []
